@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="XL-VLA: Cross-Hand Latent Representation for Vision-Language-Action Models">
+  <meta name="keywords"
+    content="Vision-Language-Action, Dexterous Manipulation, Cross-Embodiment, Latent Action, Teleoperation, xArm, Unitree G1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>XL-VLA: Cross-Hand Latent Representation for Vision-Language-Action Models</title>
+
+  <!-- favicon -->
+  <link rel="icon" type="image/svg+xml" href="resources/images/icon.png">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://kit.fontawesome.com/19914a84eb.js" crossorigin="anonymous"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K8G17N1KH9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-K8G17N1KH9');
+  </script>
+</head>
+
+<body>
+  <section class="hero is-link is-fullheight video" style="overflow: hidden; position:relative;">
+    <div class="hero-video"
+      style="height: 100%; display: flex; justify-content: center; align-items: center; padding: 0; margin: 0">
+      <video playsinline autoplay muted loop style="height: 100%; aspect-ratio: 16/9; object-fit: cover">
+        <source src="./resources/videos/website_teaser.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="hero-video is-hidden-tablet is-inline-block-mobile"
+      style="height: 154.28571428vw; width: 100%; min-width:64.81481481vh;min-height:100%;">
+      <video playsinline autoplay muted loop>
+        <source src="./resources/videos/website_teaser.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="overlay"></div>
+
+    <div class="hero-body" style="padding-top: 2rem; transform: translateY(-5vh);">
+      <div class="container has-text-centered">
+        <h1 class="title is-1 publication-title is-size-1-mobile" style="font-size: 9rem;">
+          XL-VLA
+        </h1>
+        <h1 class="subtitle is-1 publication-title is-size-4-mobile"
+          style="font-size: 3rem; line-height: 1.2; margin-bottom: 2rem;">
+          Cross-Hand Latent Representation for Vision-Language-Action Models
+        </h1>
+
+        <div style="margin-bottom: 1.25em;">
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="./xl-vla.pdf" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <img src="./static/images/pdf.svg" alt="PDF" />
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://xl-vla.github.io/" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <img src="./static/images/arxiv.svg" alt="arXiv" />
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/luccachiang/XL-VLA" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (Policy)</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/EmptyBlueBox/DexLatent" class="external-link button is-normal is-rounded is-dark" >
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (Latent)</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://x.com/LuccaChiang/"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <img src="./resources/images/x-logo-white.png" alt="X" />
+                  </span>
+                  <span style="margin-left: 10px; margin-right: 10px;">X</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets/GqJiang/XL-VLA"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <span style="font-size: 1rem;">🤗</span>
+                  </span>
+                  <span>Dataset</span>
+                </a>
+              </span>
+            </div>
+          </div>
+
+          <h2 class="is-2 is-italic is-size-4-mobile" style="font-size: 2rem; opacity: 90%; font-weight: 500; margin-bottom: 0.8em; letter-spacing: 0.02em;">
+            CVPR 2026
+          </h2>
+          <h2 class="is-2 is-size-4-mobile" style="font-size: 1.5rem; opacity: 95%; line-height: 1.6; margin-bottom: 0.3em;">
+            <a href="https://luccachiang.github.io/">Guangqi Jiang*</a>, 
+            <a href="https://www.lyt0112.com/">Yutong Liang*</a>, 
+            <a href="https://jianglongye.com/">Jianglong Ye</a>, 
+            <a href="https://www.linkedin.com/in/jia-yang-huang/">Jia-Yang Huang</a>,
+            <a href="https://changwei-jing.github.io/">Changwei Jing</a>, <br>
+            <a href="http://rockyduan.com/">Rocky Duan</a>,
+            <a href="https://people.eecs.berkeley.edu/~pabbeel/">Pieter Abbeel</a>, 
+            <a href="https://xiaolonw.github.io/">Xiaolong Wang&dagger;</a>, 
+            <a href="https://maureenzou.github.io/">Xueyan Zou&dagger;</a>
+          </h2>
+          <h2 class="is-2 is-italic is-size-4-mobile"
+            style="font-size: 1.2rem; opacity: 90%; font-weight: 500; margin-bottom: 0.6em; letter-spacing: 0.02em;">
+            UC San Diego &middot; Amazon FAR &middot; UC Berkeley
+          </h2>
+          <h2 class="is-2 is-italic is-size-4-mobile"
+            style="font-size: 1.1rem; opacity: 90%; font-weight: 600; letter-spacing: 0.01em;">
+            <b>* Equal Contribution &nbsp;&nbsp; &dagger; Equal Advising</b>
+          </h2>
+
+          <div class="has-text-centered" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
+            <img src="./resources/images/ucsd_logo.png" alt="UC San Diego Logo" style="height: 2.5rem;"
+              class="is-hidden-mobile">
+            <img src="./resources/images/amazon-science-logo-white-text-transparent.png" alt="Amazon Logo"
+              style="height: 3.5rem; margin-left: 1rem; position: relative; top: 1rem;" class="is-hidden-mobile">
+            <img src="./resources/images/berkeley_logo_fg.png" alt="UC Berkeley Logo"
+              style="height: 3rem; margin-left: 1rem; position: relative; top: 0.5rem;" class="is-hidden-mobile">
+            <img src="./resources/images/ucsd_logo.png" alt="UC San Diego Logo" style="height: 1.8rem;"
+              class="is-hidden-tablet">
+            <img src="./resources/images/amazon-science-logo-white-text-transparent.png" alt="Amazon Logo"
+              style="height: 2rem; margin-left: 0.5rem; position: relative; top: 0.5rem;" class="is-hidden-tablet">
+            <img src="./resources/images/berkeley_logo_fg.png" alt="UC Berkeley Logo"
+              style="height: 2rem; margin-left: 0.5rem; position: relative; top: 0.5rem;" class="is-hidden-tablet">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-foot is-hidden-mobile">
+      <div class="container is-fluid is-paddingless-horizontal">
+        <div class="columns is-vcentered">
+          <div class="column is-12">
+            <nav class="tabs is-boxed is-fullwidth is-size-5">
+              <ul class="is-flex" style="width: 100%;">
+                <li style="flex: 1; text-align: center;"><a href="#sec0-overview">Overview</a></li>
+                <li style="flex: 1; text-align: center;"><a href="#sec1-summary">Summary</a></li>
+                <li style="flex: 1; text-align: center;"><a href="#sec2-method">Method</a></li>
+                <li style="flex: 1; text-align: center;"><a href="#sec3-dataset">Tasks</a></li>
+                <li style="flex: 1; text-align: center;"><a href="#sec4-scale-xarm">Zero Shot</a></li>
+                <li style="flex: 1; text-align: center;"><a href="#sec5-g1">Humanoid</a></li>
+                <li style="flex: 1; text-align: center;"><a href="#sec7-zero-shot">Tabletop</a></li>
+                <li style="flex: 1; text-align: center;"><a href="#sec6-retargeting">Retargeting</a></li>
+                <li style="flex: 1; text-align: center;"><a href="#BibTeX">BibTeX</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .highlight-orange {
+      color: #ff6600;
+      font-weight: bold;
+    }
+
+    .highlight-blue {
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    .highlight-green {
+      color: #28a745;
+      font-weight: bold;
+    }
+
+    .video-container {
+      padding: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .rounded-video {
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      min-height: 200px;
+    }
+
+    .rounded-video:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.45);
+    }
+
+    @media screen and (max-width: 768px) {
+      .video-container {
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .rounded-video {
+        border-radius: 12px;
+        min-height: 150px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .video-container {
+        padding: 0.25rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .rounded-video {
+        border-radius: 8px;
+        min-height: 120px;
+      }
+    }
+  </style>
+
+  <section class="section is-medium" id="sec0-overview">
+    <div class="container is-max-desktop">
+      <h2 class="title is-2 has-text-centered is-size-4-mobile">Overview</h2>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-justified">
+          <p class="subtitle">
+            <strong>XL-VLA</strong> is a vision-language-action framework for <strong>dexterous manipulation</strong> that
+            learns an <span class="highlight-blue">embodiment-invariant</span> latent action space shared across diverse
+            dexterous hands. This enables training a single policy on pooled multi-hand demonstrations and transferring to
+            new hand–task configurations with minimal friction.
+          </p>
+
+          <div class="content">
+            <ul>
+              <li><span class="highlight-green">Data scaling:</span> large-scale teleoperation dataset with 10 tasks across
+                4 dexterous hands (Ability, Inspire, X-Hand1, Paxini DexH13), totaling ~2M state-action pairs.</li>
+              <li><span class="highlight-green">Cross-hand latent actions:</span> an unsupervised latent autoencoder learns
+                a unified action representation that can be decoded into different hand joint spaces.</li>
+              <li><span class="highlight-green">VLA integration:</span> XL-VLA plugs the latent action space into a standard
+                VLA architecture to predict <b>one latent action chunk</b> per step and decode it into hand-specific joint
+                trajectories.</li>
+              <li><span class="highlight-green">Zero-shot generalization:</span> stronger transfer to unseen hand–task
+                combinations compared to raw-joint baselines.</li>
+              <li><span class="highlight-green">Cross-embodiment scaling law:</span> performance improves more as
+                demonstrations are scaled across more hand embodiments with unified latent actions, similar to scaling with more data from a single hand.</li>
+
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section is-small" style="margin-top: -2.5rem;" id="sec1-summary">
+    <div class="container is-max-desktop">
+      <h2 class="title is-2 has-text-centered is-size-4-mobile">Summary Video</h2>
+      <div class="video-container">
+        <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos/teaser_video_xlvla.mp4"
+          class="rounded-video"></video>
+        <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.95rem; color: #666;">
+          Some videos are accelerated.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="sec2-method">
+    <div class="container is-max-desktop">
+      <h2 class="title is-2 has-text-centered is-size-4-mobile">Method</h2>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-justified">
+          <p class="subtitle has-text-centered" style="margin-bottom: 1.5rem;">
+            XL-VLA learns a shared latent action space across dexterous hands and trains a single VLA policy to predict
+            <span class="highlight-blue">latent action chunks</span> that are decoded into each hand’s joint trajectories.
+          </p>
+
+          <div class="video-container">
+            <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos/method_video.mp4"
+              class="rounded-video"></video>
+          </div>
+
+          <div class="content">
+            <ul>
+              <li><b>Per-hand encoders/decoders:</b> map between raw joint actions and a shared latent space.</li>
+              <li><b>Latent chunk prediction:</b> the VLA predicts a single latent vector per step instead of tokenizing
+                high-rate dexterous control in raw joint space.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="sec3-dataset">
+    <div class="container is-max-desktop">
+      <h2 class="title is-2 has-text-centered is-size-4-mobile">Tasks &amp; Dataset</h2>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-justified">
+          <p class="subtitle has-text-centered" style="margin-bottom: 1.5rem;">
+            We design 10 manipulation tasks and collect large-scale teleoperation demonstrations across multiple dexterous
+            hand embodiments.
+          </p>
+
+          <div class="table-container">
+            <table class="table is-striped is-fullwidth is-hoverable">
+              <thead>
+                <tr>
+                  <th>Abbrev.</th>
+                  <th>Task</th>
+                  <th>Description (from paper)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>PF</b></td>
+                  <td>Prepare Fruits</td>
+                  <td>Put the banana and orange on the green board for cutting.</td>
+                </tr>
+                <tr>
+                  <td><b>SC</b></td>
+                  <td>Stack Cans</td>
+                  <td>Stack the cheese can on top of the salt.</td>
+                </tr>
+                <tr>
+                  <td><b>SoC</b></td>
+                  <td>Sort Cans</td>
+                  <td>Put the tomato can and the cheese can into the container.</td>
+                </tr>
+                <tr>
+                  <td><b>HB</b></td>
+                  <td>Hand over Bottle</td>
+                  <td>Hand over the white bottle from right hand to left hand.</td>
+                </tr>
+                <tr>
+                  <td><b>RL</b></td>
+                  <td>Re-organize Lemons</td>
+                  <td>Put the yellow lemon and the green lime into the bowl.</td>
+                </tr>
+                <tr>
+                  <td><b>PS</b></td>
+                  <td>Pour Sauce</td>
+                  <td>Pour mustard sauce into the meat can.</td>
+                </tr>
+                <tr>
+                  <td><b>RB</b></td>
+                  <td>Re-arrange Boxes</td>
+                  <td>Keep the table organized by re-arranging the two boxes.</td>
+                </tr>
+                <tr>
+                  <td><b>PuS</b></td>
+                  <td>Push Sugar</td>
+                  <td>Push the sugar boxes together.</td>
+                </tr>
+                <tr>
+                  <td><b>PoS</b></td>
+                  <td>Pour Sugar</td>
+                  <td>Add sugar to the starfruit.</td>
+                </tr>
+                <tr>
+                  <td><b>PC</b></td>
+                  <td>Push Cans</td>
+                  <td>Push the two tomato cans together.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="sec4-scale-xarm">
+    <div class="container is-max-desktop">
+      <h2 class="title is-2 has-text-centered is-size-4-mobile">Zero-shot Generalization</h2>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-justified is-hidden-mobile">
+          <p class="subtitle has-text-centered" style="margin-bottom: 2rem;">
+            We evaluate our policy on unseen novel hand tasks. The hand-task combination is unseen during training.
+          </p>
+        </div>
+      </div>
+
+      <div class="container is-max-desktop" style="max-width: 1200px;">
+        <div class="columns is-multiline is-centered">
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/zero_shot/pc_paxini_5x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Push Cans (Paxini, 5x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/zero_shot/pf_inspire_3x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Prepare Fruits (Inspire, 3x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/zero_shot/pf_xhand_4x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Prepare Fruits (X-Hand1, 4x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/zero_shot/pos_paxini_3x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Pour Sugar (Paxini, 3x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/zero_shot/rb_paxini_4x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Re-arrange Boxes (Paxini, 4x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/zero_shot/sc_inspire_4x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Stack Cans (Inspire, 4x)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  <section class="section" id="sec5-g1">
+    <div class="container is-max-desktop">
+      <h2 class="title is-2 has-text-centered is-size-4-mobile">Unitree G1 Demos</h2>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-justified is-hidden-mobile">
+          <p class="subtitle has-text-centered" style="margin-bottom: 2rem;">
+            We co-train humanoid data with tabletop data, and find co-training with shared latent action space outperforms training with raw actions.
+          </p>
+        </div>
+      </div>
+
+      <div class="container is-max-desktop" style="max-width: 1200px;">
+        <div class="columns is-multiline is-centered">
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/g1/prepare_fruit/pf_g1_1x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Prepare Fruits (1x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/g1/handover_bottle/hb_g1_1x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Hand over Bottle (1x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/g1/pour_sauce/ps_g1_1x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Pour Sauce (1x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/g1/pour_sugar/pos_g1_1x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Pour Sugar (1x)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="sec7-zero-shot">
+    <div class="container is-max-desktop">
+      <h2 class="title is-2 has-text-centered is-size-4-mobile">xArm Demos</h2>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-justified is-hidden-mobile">
+          <p class="subtitle has-text-centered" style="margin-bottom: 2rem;">
+            xArm tabletop arms also show cross-embodiment scaling law with latent action space, similar with G1.
+          </p>
+        </div>
+      </div>
+
+      <div class="container is-max-desktop" style="max-width: 1200px;">
+        <div class="columns is-multiline is-centered">
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/xarm/inspire/hb_inspire_2x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Hand over Bottle (Inspire, 2x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/xarm/inspire/pc_inspire_2x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Push Cans (Inspire, 2x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/xarm/inspire/ps_inspire_3x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Pour Sauce (Inspire, 3x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/xarm/inspire/sc_inspire_5x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Stack Cans (Inspire, 5x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/xarm/paxini/hb_paxini_2x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Hand over Bottle (Paxini, 2x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/xarm/paxini/pf_paxini_3x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Prepare Fruits (Paxini, 3x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/xarm/paxini/ps_paxini_3x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Pour Sauce (Paxini, 3x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/xarm/paxini/sc_paxini_4x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Stack Cans (Paxini, 4x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/xarm/paxini/soc_paxini_4x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Sort Cans (Paxini, 4x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/xarm/xhand/hb_xhand_3x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Hand over Bottle (X-Hand1, 3x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/xarm/xhand/hb_xhand_6x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Hand over Bottle (X-Hand1, 6x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/xarm/xhand/pos_xhand_3x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Pour Sugar (X-Hand1, 3x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/xarm/xhand/ps_xhand_3x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Pour Sauce (X-Hand1, 3x)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section" id="sec6-retargeting">
+    <div class="container is-max-desktop">
+      <h2 class="title is-2 has-text-centered is-size-4-mobile">Latent Retargeting</h2>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-justified is-hidden-mobile">
+          <p class="subtitle has-text-centered" style="margin-bottom: 2rem;">
+            Below we show the sequence decoded from latent action space, retargeting to multiple target embodiments.
+          </p>
+        </div>
+      </div>
+
+      <div class="container is-max-desktop" style="max-width: 1200px;">
+        <div class="columns is-multiline is-centered">
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/retargeting/xhand_src_3x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">X-Hand1 (3x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/retargeting/inspire_tgt_3x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Inspire (3x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/retargeting/paxini_tgt_3x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">Paxini DexH13 (3x)</p>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-6-desktop">
+            <div class="video-container">
+              <video playsinline autoplay loop muted controls preload="metadata" src="resources/videos_compressed/retargeting/rerun_retargeting_3x.mp4" class="rounded-video"></video>
+              <p class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">All (3x w/ Rerun)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title is-3">BibTeX</h2>
+      <pre><code>
+        @article{jiang2026cross,
+          title={Cross-Hand Latent Representation for Vision-Language-Action Models},
+          author={Jiang, Guangqi and Liang, Yutong and Ye, Jianglong and Huang, Jia-Yang and Jing, Changwei and Duan, Rocky and Abbeel, Pieter and Wang, Xiaolong and Zou, Xueyan},
+          journal={arXiv preprint},
+          year={2026}
+        }
+</code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              Website template modified from <a href="https://3dgsworld.github.io/">GSWorld</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
