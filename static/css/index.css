@@ -179,3 +179,27 @@ transition: opacity 1.0s;
   z-index: 2; /* Ensure text is above the overlay */
   transition: opacity 1.0s;
 }
+.hero-media {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-background-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.publication-links .icon img {
+  display: block;
+  width: 1em;
+  height: 1em;
+}
+
+.lazy-video {
+  background: #000;
+}
